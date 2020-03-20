@@ -1,0 +1,15 @@
+GET           /                    controllers.Assets.at(path="/public", file="index.html")
+GET           /home                controllers.Assets.at(path="/public", file="index.html")
+GET           /search              controllers.Assets.at(path="/public", file="search.html")
+GET           /project             controllers.Assets.at(path="/public", file="projectDetails.html")
+GET           /create              controllers.Assets.at(path="/public", file="create.html")
+GET           /anomalies           controllers.Assets.at(path="/public", file="anomalies.html")
+GET           /anomalies/:id       controllers.AnomaliesController.read(id: java.util.UUID)
+POST          /anomalies/all       controllers.AnomaliesController.getAll
+DELETE        /anomalies/:id       controllers.AnomaliesController.delete(id: java.util.UUID)
+GET           /tasks/:id           controllers.TasksController.read(id: java.util.UUID)
+POST          /tasks/search        controllers.TasksController.search
+POST          /tasks               controllers.TasksController.create
+PUT           /tasks/:id           controllers.TasksController.update(id: java.util.UUID)
+DELETE        /tasks/:id           controllers.TasksController.delete(id: java.util.UUID)
+GET           /assets/*file        controllers.Assets.at(path="/public", file)

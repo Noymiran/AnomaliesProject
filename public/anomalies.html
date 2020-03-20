@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="assets/styles/main.css"/>
+</head>
+<body>
+
+
+<!-- Header -->
+<header id="header">
+    <a href="index.html" class="logo"><strong></strong> </a>
+    <nav>
+        <a href="#menu">Menu</a>
+    </nav>
+</header>
+
+<!-- Nav -->
+<nav id="menu">
+    <ul class="links">
+        <li><a href="home">Home</a></li>
+        <li><a href="project">About the project</a></li>
+        <li><a href="anomalies">Anomalies</a></li>
+        <li><a href="search">Search Tasks</a></li>
+        <li><a href="create">Create Tasks</a></li>
+
+    </ul>
+</nav>
+
+
+<!-- Main -->
+
+<div id="page" ng-app="AnomaliesMgmtTool">
+
+    <div class=container ng-controller="GetAnomaliesController" ng-mousedown="mousedown()">
+        <a ng-init="getAll()"></a>
+    </div>
+
+    <a class="anchor" id="message"></a>
+    <div class=container ng-controller="MessageController"
+         ng-mousedown="mousedown()">
+        <div class="status-message status-confirm" ng-show="successMessage">
+            <h3>Success</h3>
+            <p>{{successMessage}}</p>
+        </div>
+    </div>
+
+    <div ng-controller="AnomaliesController" ng-mousedown="mousedown()">
+        <div class=container ng-controller="ListAnomaliesController" ng-show="anomalies && anomalies.length > 0">
+            <div class="inner">
+                <br>
+                <h3>Anomalies</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Task Name</th>
+                            <th></th>
+                            <th>Metric Name</th>
+                            <th>Previous Value</th>
+                            <th>Current Value</th>
+                            <th>Confidence</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="anomaly in anomalies track by $index" ng-init='getTask(anomaly)'>
+                        <tr ng-repeat="time in anomaly.timeSeries">
+                            <td>{{anomaly.task.name}}</td>
+                            <td>
+                                <button class="button delete" ng-click="delete(anomaly)">
+                                <span class="fa fa-trash-o"/> Delete
+                            </button></td>
+                            <td>{{anomaly.task.metric.name}}</td>
+                            <td>{{time.previousValue | number:2}}</td>
+                            <td>{{time.ts.value | number:2}}</td>
+                            <td>{{time.confidence | number:2}}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+
+
+                    <div ng-repeat="anomaly in anomalies track by $index">
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="copyright">
+                &copy; Noy Miran
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.1/lodash.min.js"></script>
+        <script src="https://cdn.rawgit.com/nmccready/angular-simple-logger/master/dist/angular-simple-logger.js"></script>
+        <script src="assets/js/anomalies-mngmt-tool.js"></script>
+
+</body>
+</html>

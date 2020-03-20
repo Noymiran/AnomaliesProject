@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="assets/styles/main.css"/>
+</head>
+<body>
+
+
+<!-- Header -->
+<header id="header">
+    <a href="index.html" class="logo"><strong></strong> </a>
+    <nav>
+        <a href="#menu">Menu</a>
+    </nav>
+</header>
+
+<!-- Nav -->
+<nav id="menu">
+    <ul class="links">
+        <li><a href="home">Home</a></li>
+        <li><a href="project">About the project</a></li>
+        <li><a href="anomalies">Anomalies</a></li>
+        <li><a href="search">Search Tasks</a></li>
+        <li><a href="create">Create Tasks</a></li>
+    </ul>
+</nav>
+
+
+<!-- Main -->
+
+<div id="page" ng-app="TaskMgmtTool">
+
+    <div class=container ng-controller="CreateOrSearchTaskController" ng-mousedown="mousedown()">
+        <div class="inner">
+            <!-- Form -->
+            <br>
+            <h3>Search Tasks</h3>
+            <form name="taskForm">
+                <div class="row uniform 50%">
+                    <div class="6u 12u$(xsmall)">
+                        <input type="text" name="taskName" id="taskName" value="" placeholder="Task Name"
+                               ng-model="task.name" />
+                    </div>
+
+                    <div class="6u 12u$(xsmall)">
+                        <div class="select-wrapper">
+                            <select name="detectorName" ng-options="data.name as data.name for data in detectorName"
+                                    ng-model="task.detectorName" >
+                                <option value="">- Select Detector Name-</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="12u$">
+                        <div class="select-wrapper">
+                            <select name="dataResource" id="dataResource" ng-model="task.dataResource" >
+                                <option value="">- Select Data Resource -</option>
+                                <option ng-repeat="dataResource in metricsAndData" value="{{dataResource.name}}">
+                                    {{dataResource.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+
+<!--                    <div class="12u$">-->
+<!--                        <div class="select-wrapper">-->
+<!--                            <select name="metric" ng-model="task.metric" ng-show="task.dataResource" >-->
+<!--                                <option value="">- Select Metric Name -</option>-->
+<!--                                <option ng-repeat="metrics in getMetrics(task.dataResource)">{{metrics.name}}</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <div class="12u$">
+                        <div class="select-wrapper">
+                            <select name="metric" ng-model="selectedMetric.name"
+                                    ng-options="metrics.name as metrics.name for metrics in getMetrics(task.dataResource)"
+                                    ng-show="task.dataResource"
+                                    ng-change="onMetricSelect()" >
+                                <option value="">- Select Metric Name -</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="6u 12u$(xsmall)">
+                        <div class="select-wrapper">
+                            <select name="intervalPeriodBackUnit"
+                                    ng-options="data.value as data.name for data in getData(task.dataResource)"
+                                    ng-model="task.intervalPeriodBackUnit"
+                                    ng-show="task.dataResource" >
+                                <option value="">- Select Period Back Unit -</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="6u 12u$(xsmall)">
+                        <input type="text" name="intervalPeriodBackLength" id="intervalPeriodBackLength" value=""
+                               placeholder="Period Back Length" ng-model="task.intervalPeriodBackLength"
+                               ng-show="task.dataResource"
+                               />
+                    </div>
+
+                    <div class="6u 12u$(xsmall)">
+                        <div class="select-wrapper">
+                            <select name="intervalSchedulerUnit" id="intervalSchedulerUnit"
+                                    ng-options="data.value as data.name for data in intervalUnitScheduler"
+                                    ng-model="task.intervalSchedulerUnit" >
+                                <option value="">- Select Interval Scheduler Unit -</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="6u 12u$(xsmall)">
+                        <input type="text" name="intervalSchedulerLength" id="intervalSchedulerLength" value=""
+                               placeholder="Interval Scheduler Length" ng-model="task.intervalSchedulerLength"
+                              />
+                    </div>
+
+                    <fieldset>
+                        <button id="searchtasks" type="submit" ng-disabled="searching" class="button special small" ng-click="search()">
+                            <span class="fa fa-search"/> Search
+                        </button>
+                    </fieldset>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <a class="anchor" id="message"></a>
+    <div class=container ng-controller="MessageController"
+         ng-mousedown="mousedown()">
+        <div class="status-message status-confirm" ng-show="successMessage">
+            <h3>Success</h3>
+            <p>{{successMessage}}</p>
+        </div>
+    </div>
+
+    <a class="anchor" id="searchDetails"></a>
+    <div ng-controller="TaskController" ng-mousedown="mousedown()" >
+        <div class=container ng-controller="ListTasksController" ng-show="tasks && tasks.length > 0">
+            <div class="inner">
+                <h4>Search results</h4>
+                <div class="table-wrapper" ng-click="show(task)">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                            <th>Data resource</th>
+                            <th>Metric</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                        <tr ng-repeat="task in tasks track by $index">
+                            <td>{{task.name}}
+                            <td>
+                                <button class="button small"  ng-click="edit(task)">
+                                    <span class="fa fa-edit"/> Edit
+                                </button>
+                                <button class="button delete"  ng-click="delete(task)">
+                                    <span class="fa fa-trash-o"/> Delete
+                                </button>
+                            </td>
+                            </td>
+                            <td>{{task.dataResource}}</td>
+                            <td>{{task.metric.name}}</td>
+                        </tr>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <a class="anchor" id="editDetails"></a>
+            <div class=container  ng-show="editMode" ng-mousedown="mousedown()" >
+                <h4>Edit <span class="font-brandorange font-bold">{{task.name | limitTo : 64}}</span>
+                    task
+                    details</h4>
+                <form name="taskFullForm">
+                    <div class="row uniform 50%">
+                        <div class="6u 12u$(xsmall)">
+                            <input type="text" name="taskName" id="taskName" value="" placeholder="Task Name"
+                                   ng-model="task.name" required/>
+                        </div>
+
+                        <div class="6u 12u$(xsmall)">
+                            <div class="select-wrapper">
+                                <select name="detectorName" ng-options="data.name as data.name for data in detectorName"
+                                        ng-model="task.detectorName" required>
+                                    <option value="">- Select Detector Name-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="12u$">
+                            <div class="select-wrapper">
+                                <select name="dataResource" id="dataResource" ng-model="task.dataResource" required>
+                                    <option value="">- Select Data Resource -</option>
+                                    <option ng-repeat="dataResource in metricsAndData" value="{{dataResource.name}}">
+                                        {{dataResource.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="12u$">
+                            <div class="select-wrapper">
+                                <select name="metric" ng-model="selectedMetric.name"
+                                        ng-options="metrics.name as metrics.name for metrics in getMetrics(task.dataResource)"
+                                        ng-show="task.dataResource"
+                                        ng-change="onMetricSelect()" required>
+                                    <option value="">- Select Metric Name -</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="6u 12u$(xsmall)">
+                            <div class="select-wrapper">
+                                <select name="intervalPeriodBackUnit"
+                                        ng-model="task.intervalPeriodBackUnit"
+                                        ng-options="data.value as data.name for data in getData(task.dataResource)"
+                                        ng-show="task.dataResource" required>
+                                    <option value="">- Select Period Back Unit -</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="6u 12u$(xsmall)">
+                            <input type="text" name="intervalPeriodBackLength" id="intervalPeriodBackLength" value=""
+                                   placeholder="Period Back Length" ng-model="task.intervalPeriodBackLength"
+                                   ng-show="task.dataResource"
+                                   onkeypress='return event.charCode >= 48 && event.charCode <= 57' required/>
+                        </div>
+
+                        <div class="6u 12u$(xsmall)">
+                            <div class="select-wrapper">
+                                <select name="intervalSchedulerUnit" id="intervalSchedulerUnit"
+                                        ng-options="data.value as data.name for data in intervalUnitScheduler"
+                                        ng-model="task.intervalSchedulerUnit" required>
+                                    <option value="">- Select Interval Scheduler Unit -</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="6u 12u$(xsmall)">
+                            <input type="text" name="intervalSchedulerLength" id="intervalSchedulerLength" value=""
+                                   placeholder="Interval Scheduler Length" ng-model="task.intervalSchedulerLength"
+                                   onkeypress='return event.charCode >= 48 && event.charCode <= 57' required/>
+                        </div>
+
+                        <div class="6u 12u$(xsmall)$">
+                            <div class="select-wrapper">
+                                <select name="outputChannel" ng-options="data.name as data.name for data in outputChannel"
+                                        ng-model="task.outputChannel.name" required>
+                                    <option value="">- Select Output Channel-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="6u 12u$(xsmall)">
+                            <input type="email" name="emailAddress" id="emailAddress" value="" placeholder="Email address"
+                                   ng-model="task.outputChannel.value" required/>
+                        </div>
+                        <fieldset>
+                            <div class="grid gutter-l">
+                                <!--<div class="grid-item desk-two-thirds align-right">-->
+                                <button class="button special small" ng-disabled="updating" ng-click="update(task)">
+                                    <span class="fa fa-save"/> Save changes
+                                </button>
+                                <button class="button small"  ng-click="cancel()">
+                                    <span class="fa fa-cancel"/> Cancel
+                                </button>
+                                <!--</div>-->
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="copyright">
+            &copy; Noy Miran
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.1/lodash.min.js"></script>
+    <script src="https://cdn.rawgit.com/nmccready/angular-simple-logger/master/dist/angular-simple-logger.js"></script>
+    <script src="assets/js/tasks-mngmt-tool.js"></script>
+
+</body>
+</html>
