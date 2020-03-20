@@ -1,4 +1,5 @@
-### Project explanation:
+
+## Project explanation:
 
 In the system, you can create tasks that define:
 1. Data source
@@ -36,10 +37,10 @@ Moreover:
 5. The project uses AWS features such as EC2 instance for running the project, a MongoDB instance, etc.
 
 
-#### Project architecture:
+### Project architecture:
 ![Alt Text](https://user-images.githubusercontent.com/35124012/77205698-1385e180-6afe-11ea-86d8-8d38c7d60ea5.png)
 
-#### Anomaly example
+### Anomaly example
 **Anomaly from metric:**
 ![Alt Text](https://user-images.githubusercontent.com/35124012/77206127-edad0c80-6afe-11ea-80c4-ce8ea09adf85.png
 )
@@ -48,7 +49,9 @@ Moreover:
 ![Alt Text](https://user-images.githubusercontent.com/35124012/77206180-09181780-6aff-11ea-97e4-adf7e1375a7f.png
 )
 
-### Website screenshots
+
+## Website screenshots
+
 **Create task:**
 ![Alt Text](https://user-images.githubusercontent.com/35124012/77206273-3a90e300-6aff-11ea-9ff9-5cb3423b3d29.png
 )
@@ -67,13 +70,13 @@ Moreover:
 
 
 
-#### Build
+### Build
 
 ```
 sbt test:compile
 ```
 
-#### Run
+### Run
 
 ```
 sbt run
