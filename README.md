@@ -38,35 +38,30 @@ Moreover:
 
 
 ### Project architecture:
-![Alt Text](https://user-images.githubusercontent.com/35124012/77205698-1385e180-6afe-11ea-86d8-8d38c7d60ea5.png)
+![Alt Text](https://user-images.githubusercontent.com/35124012/77227594-0d3d4700-6b8a-11ea-810f-dd9d0f34102f.png)
+
 
 ### Anomaly example
 **Anomaly from metric:**
-![Alt Text](https://user-images.githubusercontent.com/35124012/77206127-edad0c80-6afe-11ea-80c4-ce8ea09adf85.png
-)
+![Alt Text](https://user-images.githubusercontent.com/35124012/77206127-edad0c80-6afe-11ea-80c4-ce8ea09adf85.png)
 
 **How the program found the anomaly:**
-![Alt Text](https://user-images.githubusercontent.com/35124012/77206180-09181780-6aff-11ea-97e4-adf7e1375a7f.png
-)
+![Alt Text](https://user-images.githubusercontent.com/35124012/77206180-09181780-6aff-11ea-97e4-adf7e1375a7f.png)
 
 
 ## Website screenshots
 
 **Create task:**
-![Alt Text](https://user-images.githubusercontent.com/35124012/77206273-3a90e300-6aff-11ea-9ff9-5cb3423b3d29.png
-)
+![Alt Text](https://user-images.githubusercontent.com/35124012/77206273-3a90e300-6aff-11ea-9ff9-5cb3423b3d29.png)
 
 **Search tasks:**
-![Alt Text](https://user-images.githubusercontent.com/35124012/77206322-598f7500-6aff-11ea-9f50-4b5fe9df3daf.png
-)
+![Alt Text](https://user-images.githubusercontent.com/35124012/77206322-598f7500-6aff-11ea-9f50-4b5fe9df3daf.png)
 
 **Anomalies page:**
-![Alt Text](https://user-images.githubusercontent.com/35124012/77206384-804dab80-6aff-11ea-9305-d89486fa60f0.png
-)
+![Alt Text](https://user-images.githubusercontent.com/35124012/77206384-804dab80-6aff-11ea-9305-d89486fa60f0.png)
 
 **Email alert:**
-![Alt Text](https://user-images.githubusercontent.com/35124012/77206421-98252f80-6aff-11ea-8991-8e03029c48a0.png
-)
+![Alt Text](https://user-images.githubusercontent.com/35124012/77206421-98252f80-6aff-11ea-8991-8e03029c48a0.png)
 
 
 
